@@ -3,3 +3,7 @@ provider "google" {
   project     = "prefab-surfer-330306" (id нашего проект)
   region      = "us-west4-b" (регион)
 }
+
+Т.е, provide - провайдер, которого мы используем
+Credentials - реквезиты для входа
+project - наш проект
