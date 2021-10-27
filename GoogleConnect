@@ -1,0 +1,5 @@
+provider "google" {
+  credentials = file("tf_demo_auth.json") (Заходим в Google Cloud, открываем консоль, IAM & Admin, Service Accounts, Actions-Manage Keys. Мы сгенерировали ключ нашего проекта)
+  project     = "prefab-surfer-330306" (id нашего проект)
+  region      = "us-west4-b" (регион)
+}
