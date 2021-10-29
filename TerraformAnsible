@@ -1,0 +1,42 @@
+ANSIBLE-CLIENT
+resource "google_compute_instance" "ansible-client" {
+ name	     = "ansible-client"
+ machine_type = "f1-micro"
+ zone	     =  "us-west4-b"
+ 
+ boot_disk {
+  initialize_params {
+   image = "debian-cloud/debian-10"
+  }
+}
+ 
+ metadata_startup_script = "sudo apt-get update; sudo apt-get install python -y; sudo apt-get install ssh -y"
+ 
+ network_interface {
+  network = "default"
+
+  access_config {
+  }
+ }
+}
+ANSIBLE-MASTER
+resource "google_compute_instance" "ansible-master" {
+ name	     = "ansible-master"
+ machine_type = "f1-micro"
+ zone	     =  "us-west4-b"
+ 
+ boot_disk {
+  initialize_params {
+   image = "debian-cloud/debian-10"
+  }
+}
+ 
+ metadata_startup_script = "sudo apt-get update; sudo apt-get install ssh -y; sudo apt-get install ansible -y; sudo apt-get install sshpass -y"
+ 
+ network_interface {
+  network = "default"
+
+  access_config {
+  }
+ }
+}
