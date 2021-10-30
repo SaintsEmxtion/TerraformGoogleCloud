@@ -1,9 +1,27 @@
-resource "google_compute_firewall" "default" {
- name    = "flask-app-firewall"
- network = "default"
+resource "google_compute_firewall" "consul_ingress" { #входящий трафик
+    name = "consul-int-firewall"
+    network = "default"
 
- allow {
-   protocol = "tcp"
-   ports    = ["5000"]
- }
+    allow {
+        protocol = "tcp"
+        ports = [
+            "8300", # Server RPC
+            "8301", # Serf LAN
+            "8400"  # RPC
+        ]
+    }
+
+    source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_firewall" "consul_ui" { #исходящий трафик
+    name = "consul-ui-firewall"
+    network = "default"
+
+    allow {
+        protocol = "tcp"
+        ports = ["8500", "22"]
+    }
+
+    source_ranges = ["0.0.0.0/0"]
 }
