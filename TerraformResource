@@ -1,0 +1,20 @@
+google_compute_backend_service #Серверная служба определяет группу виртуальных машин, которые будут обслуживать трафик для балансировки нагрузки.
+resource "google_compute_backend_service" "staging_service" {
+  name      = "staging-service"
+  port_name = "https"
+  protocol  = "HTTPS"
+
+  backend {
+    group = google_compute_instance_group.staging_group.id
+  }
+
+  health_checks = [
+    google_compute_https_health_check.staging_health.id,
+  ]
+}
+
+google_compute_https_health_check #Этот ресурс определяет шаблон для проверки работоспособности отдельных виртуальных машин через HTTPS.
+resource "google_compute_https_health_check" "staging_health" {
+  name         = "staging-health"
+  request_path = "/health_check"
+}
