@@ -1,0 +1,25 @@
+variable "zone" {
+  default = "europe-west2-b"
+}
+variable "image" {
+  default = "debian-cloud/debian-10"
+}
+
+resource "google_compute_instance" "vpnserver-europe" {
+  count        = 3
+  name         = "test-${count.index}"
+  machine_type = var.machine_type
+  zone         = var.zone
+  boot_disk {
+    initialize_params {
+      image = var.image
+    }
+  }
+  network_interface {
+    network = "default"
+
+    access_config {
+
+    }
+  }
+}
